@@ -1,52 +1,52 @@
-# Requisitos e critérios de aceitação
+# Requisitos do projeto
 
-Os requisitos obrigatórios abaixo foram extraídos do enunciado fornecido. As decisões de implementação são propostas do grupo e podem ser alteradas antes da implementação.
+## O que o professor pediu
 
-## Obrigações do enunciado
+| Item | O que precisamos entregar |
+| --- | --- |
+| Tecnologia | Jogo desenvolvido com libGDX. |
+| Controle | Ações do jogo controladas pelos dados do dispositivo. |
+| Fases | Pelo menos três fases diferentes, com dificuldade progressiva. |
+| Personagem | Pelo menos um personagem principal. |
+| Menu | Opções para iniciar, pausar e reiniciar. |
+| Avaliação | Um indicador obtido do dispositivo, usado na pontuação. |
+| Código | Código-fonte completo no GitHub e commits semanais de cada integrante. |
+| Acompanhamento | Kanban atualizado e explicação do que foi feito e do que falta fazer. |
+| Aplicação | Executável ou APK funcionando. Vamos trabalhar com a versão para computador. |
+| Short paper | Documento de até seis páginas com problema, justificativa, descrição do jogo, integração e prints. |
 
-| ID | Requisito | Evidência esperada |
-| --- | --- | --- |
-| O01 | Desenvolver o jogo com libGDX | Código-fonte e jogo executando. |
-| O02 | Controlar o jogo exclusivamente por dados do dispositivo | Demonstração sem controle de jogo pelo teclado ou mouse. |
-| O03 | Incluir pelo menos três fases distintas com dificuldade progressiva | Partida demonstrando as três fases e suas diferenças. |
-| O04 | Incluir pelo menos um personagem principal | Personagem visível e funcional. |
-| O05 | Permitir iniciar, pausar e reiniciar | Ações funcionando por meio do dispositivo. |
-| O06 | Monitorar velocidade, consistência ou outro indicador derivado do dispositivo e utilizá-lo na pontuação | Fórmula documentada, coleta funcional e resultados exibidos. |
-| O07 | Entregar código-fonte e executável ou APK | Código completo e artefato que execute no ambiente alvo. |
-| O08 | Entregar short paper de até seis páginas | Problema, contexto, justificativa, descrição do jogo, integração e prints reais. |
-| O09 | Registrar commits semanais de cada integrante | Histórico individual com contribuições identificáveis. |
-| O10 | Apresentar Kanban e progresso nas reuniões semanais | Quadro atualizado, resumo da semana e próximos passos. |
+## Como pretendemos atender
 
-## Propostas de implementação
+- Usar dois botões conectados ao Arduino.
+- Fazer o personagem andar para a esquerda ou para a direita.
+- Coletar frutas e contar acertos, perdas e colisões com objetos que devem ser evitados.
+- Aumentar a dificuldade entre as três fases.
+- Usar os botões também nas opções do menu.
+- Mostrar os resultados ao terminar.
 
-| ID | Proposta | Critério de aceitação |
-| --- | --- | --- |
-| P01 | Dois botões no Arduino com USB/serial | Estados dos dois botões chegam ao programa e controlam o personagem. |
-| P02 | Personagem com movimento lateral | Não sai dos limites da tela e para ao soltar o comando. |
-| P03 | Coleta de frutas | Cada colisão válida conta uma única vez. |
-| P04 | Frutas perdidas | Fruta que sai da tela é removida e registrada uma única vez. |
-| P05 | Objeto a evitar na fase 3 | Colisão gera consequência documentada uma única vez. |
-| P06 | Resultados ao final | Exibe pontuação e os indicadores implementados. |
-| P07 | Tratamento de conexão ausente | Informa o problema e não aceita dados antigos como novos movimentos. |
-| P08 | Reinício consistente | Zera contadores, tempo e objetos da partida anterior. |
+Ainda precisamos da autorização do professor para usar os botões no lugar das pedaladas e a comunicação por USB.
 
-## Regras de métricas propostas
+## Pontuação e indicadores
 
-- Acertos: frutas coletadas.
-- Perdas: frutas não coletadas.
-- Erros: colisões com o objeto a evitar.
-- Taxa de coleta: coletadas / (coletadas + perdidas) × 100. Se não houver frutas avaliadas, mostrar “sem dados”.
-- Acionamentos: transições válidas de solto para pressionado, com tratamento de contato instável do botão. Não contar cada leitura contínua como um novo acionamento.
-- Consistência: opcionalmente, variação dos intervalos entre acionamentos em uma tarefa com ritmo explicitamente definido. Não interpretar pausas estratégicas como falhas motoras.
+Pretendemos contar frutas coletadas, frutas perdidas e acionamentos dos botões. Cada fruta deve ser contada uma única vez.
 
-Proposta para incluir dados do dispositivo na pontuação: em cada fase, reservar uma pequena etapa de comandos indicados na tela. Um acerto exige pressionar o botão indicado dentro de uma janela de tempo configurável. Um mesmo acionamento não pode valer para mais de um alvo. Os acertos dessa etapa geram bônus. Essa regra depende da validação de viabilidade e deve ser aprovada pelo grupo antes de programar.
+A taxa de coleta será:
 
-Tempo de resposta só deve ser calculado nessa etapa com estímulo explícito: instante do acionamento correto menos instante de apresentação do comando. Não usar a queda de uma fruta qualquer como medida automática de resposta.
+`frutas coletadas / (frutas coletadas + frutas perdidas) × 100`
 
-## Limites da avaliação
+Se ainda não houver frutas avaliadas, vamos mostrar que não há dados, sem fazer a divisão.
 
-Métricas de jogo descrevem desempenho na atividade. Não são escalas clínicas. Comparações entre sessões só fazem sentido com configurações registradas e equivalentes. O Arduino com botões não mede força ou amplitude.
+Para contar acionamentos, precisamos identificar quando o botão passa de solto para pressionado. Manter o botão apertado não pode contar várias vezes como se fossem novos toques.
 
-## Aprovação necessária
+Contar apenas frutas não atende, sozinho, à exigência de usar um indicador do dispositivo na pontuação. Antes de implementar, vamos definir como relacionar os comandos físicos aos pontos e confirmar essa regra com o professor. Uma possibilidade é mostrar um comando na tela e dar pontos quando o botão indicado for apertado dentro do tempo definido.
 
-P01 depende do professor: o enunciado permite outros dispositivos mediante autorização prévia, mas a rubrica final cita pedaladas. Registrar a decisão antes de consolidar o hardware.
+Se medirmos tempo de resposta, ele será contado entre o aparecimento de um comando e o acionamento correto. Não vamos chamar qualquer intervalo entre apertos de tempo de resposta.
+
+## Cuidados no funcionamento
+
+- O personagem não pode sair da tela.
+- O movimento deve parar ao soltar o botão.
+- A pausa deve parar o tempo da partida e os objetos.
+- Reiniciar deve limpar os dados da partida anterior.
+- A falta de conexão com o Arduino precisa ser informada.
+- Os resultados mostram desempenho no jogo, sem afirmar recuperação clínica.

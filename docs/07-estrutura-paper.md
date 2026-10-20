@@ -1,45 +1,43 @@
-# Estrutura inicial do short paper
+# Organização do short paper
 
-Este é um roteiro de redação, não o paper final. O enunciado limita o documento a seis páginas. Confirmar com o professor o modelo e se referências entram nessa contagem; até lá, planejar tudo dentro do limite.
+O professor pediu um short paper de até seis páginas. Este arquivo é só a estrutura que vamos seguir; o relatório final ainda será escrito.
 
 ## Título provisório
 
-Colheita em Movimento: protótipo de jogo sério com Arduino para apoio ao treino de coordenação de braço e mão após AVC.
+Colheita em Movimento: jogo com Arduino para apoio ao treino de coordenação de braço e mão após AVC.
 
-## 1 Introdução e problema
+## 1 Introdução
 
-Apresentar o contexto de reabilitação escolhido, a atividade proposta e o objetivo do projeto. Diferenciar a justificativa da proposta de uma alegação de benefício comprovado.
+Explicar o problema escolhido, o público e o objetivo do jogo.
 
-## 2 Justificativa e fundamentação
+## 2 Justificativa
 
-Explicar a escolha de uma tarefa repetitiva com metas e retorno visual. Consultar as fontes e relacioná-las ao recorte do projeto. Não atribuir à literatura a validação de um jogo que ainda não foi avaliado.
+Explicar por que escolhemos esse tema e como o jogo pode tornar a atividade mais interessante. Usar referências que o grupo tenha consultado, sem afirmar que o nosso projeto já tem resultado clínico comprovado.
 
-## 3 Dispositivo e integração
+## 3 Arduino e integração
 
-Descrever placa, botões, circuito, mensagens e comunicação com o Java. Inserir foto ou diagrama da montagem real. Registrar autorização do professor para o dispositivo alternativo, quando obtida.
+Mostrar os componentes, as ligações e como os dados dos botões chegam ao jogo. Incluir foto ou desenho da montagem feita pelo grupo.
 
-## 4 Descrição do jogo
+## 4 Funcionamento do jogo
 
-Explicar personagem, coleta, três fases, menu, pausa, reinício, pontuação e indicador derivado do dispositivo. Incluir prints da versão realmente implementada.
+Descrever o personagem, as frutas, as três fases, o menu, os controles e a pontuação. Colocar prints do que foi implementado.
 
-## 5 Verificação e limitações
+## 5 Testes e limitações
 
-Apresentar os testes efetivamente executados, ambiente, resultados e falhas corrigidas. Explicar que métricas de jogo não comprovam recuperação clínica. Não inventar número de participantes, percentuais de melhora ou resultados.
+Mostrar quais testes fizemos, o que funcionou e quais problemas encontramos. Explicar o que os botões conseguem medir e o que não conseguimos avaliar com esse projeto.
 
 ## 6 Conclusão
 
-Relatar o que foi entregue, quais objetivos foram atingidos e o que permanece para trabalhos futuros. Redigir depois da implementação e dos testes.
+Escrever depois que o jogo estiver pronto, contando o que conseguimos entregar e o que poderia ser melhorado.
 
 ## Referências
 
-Usar o padrão solicitado pelo professor e registrar apenas fontes realmente consultadas. Identificar também ferramentas e materiais de apoio conforme as regras da disciplina.
+Usar o formato pedido pelo professor. Se houver um modelo de artigo da disciplina, seguir esse modelo.
 
-## Checklist antes de exportar
+## Antes de entregar
 
-- Texto final dentro de seis páginas.
-- Nomes reais dos integrantes e demais dados exigidos.
-- Prints legíveis da implementação.
-- Descrição da integração corresponde ao circuito entregue.
-- Fórmulas de métricas e pontuação correspondem ao código.
-- Resultados correspondem aos registros de validação.
-- Referências completas e verificadas.
+- Conferir o limite de seis páginas e os dados dos integrantes.
+- Usar prints legíveis da versão entregue.
+- Conferir se as explicações correspondem ao código e ao circuito.
+- Colocar somente resultados de testes que realmente fizemos.
+- Revisar o texto e as referências com o grupo.

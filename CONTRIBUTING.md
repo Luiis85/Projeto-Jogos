@@ -1,44 +1,35 @@
-# Como contribuir
+# Organização dos commits
 
-## Contribuições e autoria
+O professor pediu commits semanais de cada integrante. Para não deixar o trabalho acumular, nossa ideia é que cada um faça uma contribuição por dia.
 
-O enunciado exige commits semanais de cada integrante. O grupo propõe organizar contribuições diárias para manter o trabalho distribuído. Um commit pode adicionar código, revisar documentação, corrigir falhas ou registrar uma validação real.
+Pode ser uma parte do código, uma correção, uma atualização da documentação ou o registro de um teste realizado.
 
-Cada pessoa usa sua própria conta e registra seu próprio trabalho. Não criar commits vazios, retroativos ou em nome dos colegas. Os arquivos iniciais são rascunhos preparados com apoio de IA e precisam de revisão e compreensão do grupo. Seguir as regras da disciplina sobre uso e declaração de IA.
+## Como vamos trabalhar
 
-## Fluxo simples
+1. Conferir no Kanban qual tarefa vamos fazer.
+2. Combinar com o grupo antes de editar um arquivo que outra pessoa também esteja usando.
+3. Atualizar a cópia do projeto antes de começar.
+4. Fazer a alteração e conferir o resultado.
+5. Criar um commit explicando o que mudou.
+6. Enviar a alteração e atualizar a tarefa no Kanban.
 
-1. Conferir a tarefa e combinar quem editará cada arquivo.
-2. Atualizar sua cópia antes de começar.
-3. Fazer uma alteração pequena e coerente.
-4. Verificar o comportamento ou revisar o texto modificado.
-5. Criar commit explicando a alteração.
-6. Enviar a contribuição e atualizar o Kanban.
-
-Se usarem branches e pull requests, pedir a outro integrante que revise antes da integração. Evitar duas pessoas alterando a mesma parte de um arquivo ao mesmo tempo.
+Cada pessoa deve usar sua própria conta e registrar sua contribuição. Não precisamos criar commits vazios só para completar a quantidade.
 
 ## Exemplos de mensagens
 
-- `docs: adiciona proposta e requisitos iniciais`
-- `docs: registra integrantes e divisão de tarefas`
-- `feat: recebe estados dos botões pela serial`
-- `feat: adiciona coleta de frutas`
-- `fix: interrompe movimento ao perder conexão`
-- `docs: registra resultado do teste de reinício`
+- `Adiciona proposta e planejamento do projeto`
+- `Atualiza os integrantes e a divisão das tarefas`
+- `Faz a leitura dos dois botões`
+- `Adiciona a coleta de frutas`
+- `Corrige o movimento ao soltar o botão`
+- `Registra o teste de pausa e reinício`
 
-Mensagens devem descrever trabalho realizado. Não usar “implementa Arduino” em um commit que contém apenas planejamento.
+## Primeiro envio
 
-## Primeira distribuição possível
+Uma pessoa pode enviar a documentação inicial. Depois, os outros integrantes fazem suas próprias alterações, como preencher informações reais, revisar requisitos e registrar os materiais disponíveis.
 
-Uma pessoa pode adicionar este pacote inteiro como documentação inicial. Os demais devem fazer contribuições próprias após revisar: preencher os dados reais, ajustar requisitos acordados, registrar componentes disponíveis ou atualizar tarefas. Não reenviar o mesmo conteúdo como se fosse trabalho novo.
+Todos precisam ler e entender os arquivos antes de apresentar o projeto e seguir as orientações do professor sobre materiais de apoio.
 
-## Antes de concluir uma tarefa
+## Ao usar o laboratório
 
-- O critério do cartão foi atendido.
-- Não foram enviados senhas, dados pessoais de pacientes ou arquivos temporários.
-- A documentação não declara como funcionando algo que não foi testado.
-- O grupo consegue explicar a alteração.
-
-## Arquivos de código do laboratório
-
-Quando o laboratório for incorporado, identificar sua origem e as alterações feitas pelo grupo. Manter o Gradle Wrapper, os scripts e as configurações necessários para reproduzir a compilação. A pasta `build` e o cache `.gradle` não devem entrar no histórico.
+Vamos identificar o código recebido como base e explicar o que alteramos. Não vamos enviar caches e pastas de compilação junto com o código. Os arquivos necessários para compilar o projeto, como o Gradle Wrapper, devem ser mantidos.

@@ -1,12 +1,12 @@
-# Planejamento até a entrega
+# Divisão das tarefas
 
-Prazo informado: 04/11/2026. Meta de conclusão das funcionalidades: 30/10/2026.
+Precisamos entregar até **04/11/2026**. Vamos tentar terminar as funcionalidades até **30/10** para ter alguns dias de testes e correções.
 
-Divisão provisória para quatro pessoas: A cuida do Arduino; B das mecânicas; C das telas e fases; D da documentação e do registro de validação. Os nomes ainda precisam ser preenchidos.
+Por enquanto, dividimos o trabalho em quatro partes: A fica com Arduino, B com as mecânicas, C com as telas e D com a documentação e os registros dos testes. Vamos preencher os nomes e ajustar essa divisão com o grupo.
 
-## Entregas diárias propostas
+## Tarefas por dia
 
-As tarefas abaixo são planejadas, não concluídas. Ajustar o plano diariamente conforme o progresso real. A regra interna é uma contribuição significativa por pessoa por dia; o enunciado exige commits semanais individuais.
+Esta tabela mostra o que planejamos fazer, não o que já está pronto. Vamos atualizar conforme o andamento. A ideia de contribuir todos os dias é nossa; o professor exige commits semanais de cada integrante.
 
 | Data | A | B | C | D |
 | --- | --- | --- | --- | --- |
@@ -28,7 +28,7 @@ As tarefas abaixo são planejadas, não concluídas. Ajustar o plano diariamente
 | 03/11 | Conferir circuito para demonstração | Preparar versão final | Preparar roteiro de demonstração | Conferir pacote e limite de páginas |
 | 04/11 | Registrar verificação real do dispositivo | Registrar verificação real do executável | Registrar verificação real dos controles | Conferir envio e registrar entrega |
 
-## Marcos de decisão
+## Datas que precisamos acompanhar
 
 - Até 20/10: consultar professor sobre botões e verificar acesso aos componentes.
 - Até 22/10: botão físico movimentando personagem. Se falhar, concentrar o grupo na integração.
@@ -37,7 +37,7 @@ As tarefas abaixo são planejadas, não concluídas. Ajustar o plano diariamente
 - Até 30/10: funcionalidades fechadas e paper completo em primeira versão.
 - De 31/10 a 03/11: correções, validação e empacotamento.
 
-## Rotina do grupo
+## No dia a dia
 
 1. Antes de trabalhar, atualizar a cópia local e conferir tarefas em andamento.
 2. Assumir uma tarefa com responsável e critério de conclusão.
@@ -45,4 +45,4 @@ As tarefas abaixo são planejadas, não concluídas. Ajustar o plano diariamente
 4. Registrar no commit o que mudou; atualizar o Kanban com a evidência.
 5. Informar ao grupo bloqueios e mudanças que afetam outros arquivos.
 
-Se o projeto ainda não tiver começado em uma data prevista, replanejar sem criar commits retroativos. Registrar o trabalho na data em que foi realizado.
+Se uma tarefa atrasar, vamos ajustar as próximas entregas e registrar o trabalho na data em que ele for feito.

@@ -1,49 +1,44 @@
-# Arduino e integração
+# Arduino e comunicação com o jogo
 
-Este documento organiza os próximos passos. Ainda não há firmware, circuito validado ou integração executada neste pacote.
+## Materiais previstos
 
-## Componentes propostos
+| Material | Quantidade |
+| --- | --- |
+| Arduino Uno ou placa compatível com o laboratório | 1 |
+| Cabo USB que transmita dados | 1 |
+| Botões | 2 |
+| Protoboard | 1 |
+| Fios de conexão | Conforme a montagem |
+| Base para fixar os botões | 1 |
 
-| Item | Quantidade prevista | Observação |
-| --- | --- | --- |
-| Arduino Uno compatível com o laboratório | 1 | Confirmar qual placa o grupo possui. |
-| Cabo USB de dados | 1 | Deve transmitir dados, além de alimentar. |
-| Botões de acionamento leve | 2 | Para a base final, preferir superfície grande e fixação estável. |
-| Protoboard | 1 | Para montagem inicial sem solda. |
-| Fios de conexão | Conforme a montagem | Verificar conectores dos botões. |
-| Base para fixação | 1 | Evitar que os botões deslizem durante o uso. |
+Vamos conferir o que já temos e confirmar a proposta com o professor antes de comprar. Para a montagem final, a ideia é usar botões grandes, fáceis de apertar e bem fixados.
 
-Não comprar antes de confirmar o dispositivo com o professor e conferir o material já disponível. Valores e fornecedores não foram pesquisados neste pacote.
+## Como os dados vão chegar ao jogo
 
-## Fluxo de dados previsto
+A pessoa aperta o botão, o Arduino lê o estado e envia a informação pelo cabo USB. O programa em Java recebe esse dado e movimenta o personagem no libGDX.
 
-Botões físicos → Arduino → cabo USB e porta serial → leitor Java → comandos do jogo libGDX.
+O laboratório que recebemos já tem um exemplo de leitura pela porta serial e movimento para os lados. Vamos usar isso como base e identificar no projeto quais partes foram adaptadas.
 
-O laboratório recebido já apresenta leitura de linhas pela serial e movimento lateral. Ele é ponto de partida, não uma aplicação completa. Não foi localizado arquivo `.ino` no ZIP inspecionado; o programa da placa ainda precisa ser desenvolvido.
+Não encontramos um arquivo `.ino` no ZIP analisado. Ainda precisamos criar o programa que será enviado ao Arduino.
 
-## Sequência de implementação
+## Por onde vamos começar
 
-1. Identificar placa e cabo e conseguir enviar um programa básico à placa.
-2. Ler um botão e verificar os estados no monitor serial.
-3. Ler os dois botões e distinguir pressionado e solto.
-4. Definir o tratamento de ambos pressionados.
-5. Definir um protocolo simples de estados com separação entre mensagens e velocidade serial igual nas duas pontas.
-6. Fazer o Java receber e registrar os valores.
-7. Conectar os estados à movimentação e testar soltura, bordas e desconexão.
-8. Tratar contato instável dos botões para não duplicar acionamentos.
+1. Conseguir enviar um programa básico para a placa.
+2. Ler um botão e conferir o resultado no monitor serial.
+3. Fazer a leitura dos dois botões.
+4. Definir como enviar os estados ao Java.
+5. Conferir se o Java recebe os dados.
+6. Usar os dados para mover o personagem.
+7. Testar o que acontece ao soltar, apertar os dois juntos e desconectar o cabo.
 
-## Decisões técnicas a registrar após testar
+## O que precisamos documentar depois da montagem
 
-- Modelo da placa e configuração escolhida.
-- Pinos e diagrama real do circuito.
-- Uso de resistores internos ou externos conforme a montagem adotada.
-- Formato exato das mensagens e velocidade serial.
-- Porta usada e como configurá-la em outro computador.
-- Frequência de transmissão e comportamento quando não há dados novos.
-- Lógica para navegar no menu, pausar e reiniciar com apenas dois botões.
+- Modelo da placa.
+- Pinos usados e desenho ou foto das ligações.
+- Formato das mensagens e velocidade da comunicação.
+- Porta serial e como mudar essa configuração.
+- Comandos usados no menu, na pausa e no reinício.
 
-O leitor do laboratório armazena a última linha recebida. Se o protocolo transmitir apenas eventos muito curtos, eles podem ser substituídos antes que o jogo os processe. Avaliar envio periódico de estados para movimentação e tratamento confiável dos eventos usados em pontuação e menus.
+O leitor do laboratório guarda a última mensagem recebida. Precisamos conferir se ele não perde apertos rápidos e se o personagem para quando não deve mais receber o comando. Também precisamos evitar que a oscilação do contato de um botão seja contada como vários apertos.
 
-## Autoria e arquivos
-
-Ao incorporar o laboratório, preservar os avisos existentes, identificar o material base no README e registrar o que foi alterado. Não enviar pastas de compilação, caches ou classes compiladas junto do código-fonte.
+Ainda não temos circuito nem comunicação testados pelo grupo neste pacote.

@@ -1,65 +1,68 @@
 # Colheita em Movimento
 
-Protótipo acadêmico de jogo sério em Java com libGDX e Arduino. A proposta é controlar um personagem por dois botões físicos e coletar frutas que caem na tela.
+Nosso projeto será um jogo de coleta de frutas, feito em Java com libGDX e controlado por dois botões ligados ao Arduino.
 
-O público proposto são pessoas com sequelas motoras de AVC que consigam alcançar e pressionar os botões. O projeto explora uma atividade de coordenação de braço e mão; seu benefício clínico não foi avaliado.
+A ideia é que a pessoa movimente um personagem para os lados e tente pegar as frutas que caem. Conforme ela avança, o jogo fica um pouco mais difícil.
 
-## Situação atual
+## Objetivo
 
-Este repositório começa pela documentação e pelo planejamento. Ainda não contém o jogo executável, firmware do Arduino ou testes realizados pelo grupo. O nome do jogo é provisório.
+Queremos desenvolver um jogo voltado ao treino de coordenação do braço e da mão. O público que pensamos são pessoas com sequelas de AVC que consigam alcançar e apertar os botões.
 
-O uso dos botões como alternativa às pedaladas precisa ser autorizado pelo professor. O enunciado admite outros dispositivos com autorização prévia, mas sua seção de avaliação menciona pedaladas. A conexão prevista é USB/serial, aproveitando a abordagem do laboratório; confirmar também a aceitação dessa solução como integração com o dispositivo exigido.
+O jogo será um projeto acadêmico de apoio à reabilitação. Não vamos avaliar recuperação clínica. Para usar com pacientes, seria necessário acompanhamento de um profissional da área.
 
-## Funcionamento proposto
+## Como vai funcionar
 
-- Botão esquerdo: desloca o personagem para a esquerda.
-- Botão direito: desloca o personagem para a direita.
-- Frutas coletadas aumentam a pontuação.
-- As três fases têm dificuldade progressiva.
-- O dispositivo também permite iniciar, pausar e reiniciar a partida.
-- Ao final, a tela apresenta pontuação e métricas da sessão.
+- O botão da esquerda move o personagem para a esquerda.
+- O botão da direita move o personagem para a direita.
+- O jogador ganha pontos ao coletar frutas.
+- O jogo terá três fases com dificuldade progressiva.
+- Também teremos menu, pausa, reinício e uma tela de resultados.
+- Os botões serão usados para controlar o jogo e navegar pelas telas.
 
-As regras exatas de navegação com os dois botões serão definidas e testadas antes da versão final. Teclado, se usado para depuração, não será o controle da demonstração final.
+## O que temos até agora
 
-## Documentação
+Por enquanto, organizamos a proposta, os requisitos e as tarefas. O código do jogo e do Arduino ainda precisa ser desenvolvido.
 
-| Arquivo | Conteúdo |
+Também precisamos confirmar com o professor se podemos usar os botões no lugar das pedaladas e fazer a comunicação por USB. O enunciado permite outros dispositivos com autorização, mas a parte da avaliação menciona pedaladas.
+
+## Organização dos arquivos
+
+| Arquivo | O que tem nele |
 | --- | --- |
-| [Proposta](docs/01-proposta.md) | Problema, público, objetivo e escopo. |
-| [Requisitos](docs/02-requisitos.md) | Obrigações do enunciado e decisões propostas. |
-| [Planejamento](docs/03-planejamento.md) | Divisão de trabalho e entregas até 04/11/2026. |
-| [Kanban](docs/04-kanban.md) | Tarefas, dependências e critérios de conclusão. |
-| [Validação](docs/05-validacao.md) | Roteiro de testes e métricas propostas. |
-| [Arduino e integração](docs/06-arduino-integracao.md) | Componentes e próximos passos técnicos. |
-| [Short paper](docs/07-estrutura-paper.md) | Estrutura para o documento de até seis páginas. |
-| [Contribuição](CONTRIBUTING.md) | Como dividir trabalho e registrar commits. |
+| [Proposta](docs/01-proposta.md) | Ideia do jogo, objetivo e público. |
+| [Requisitos](docs/02-requisitos.md) | O que precisamos entregar e como o jogo deve funcionar. |
+| [Planejamento](docs/03-planejamento.md) | Divisão das tarefas até a entrega. |
+| [Kanban](docs/04-kanban.md) | Lista de tarefas e andamento. |
+| [Testes](docs/05-validacao.md) | O que vamos conferir durante o desenvolvimento. |
+| [Arduino](docs/06-arduino-integracao.md) | Materiais e passos para ligar os botões ao jogo. |
+| [Relatório](docs/07-estrutura-paper.md) | Organização do short paper. |
+| [Contribuições](CONTRIBUTING.md) | Como vamos organizar os commits. |
 
-## Equipe
+## Integrantes
 
-Divisão provisória para quatro integrantes. Substituir as identificações pelos nomes reais e ajustar a quantidade de pessoas antes de distribuir as tarefas.
+Ainda precisamos preencher os nomes. A divisão abaixo considera quatro pessoas e pode mudar conforme o grupo.
 
-| Identificação | Responsabilidade principal | Nome |
-| --- | --- | --- |
-| A | Arduino e comunicação serial | A preencher |
-| B | Mecânicas e personagem | A preencher |
-| C | Telas, controles de navegação e fases | A preencher |
-| D | Documentação, organização e registro de validação | A preencher |
+| Integrante | Parte principal |
+| --- | --- |
+| A preencher — A | Arduino e comunicação com o computador. |
+| A preencher — B | Personagem, frutas e pontuação. |
+| A preencher — C | Menu, telas e organização das fases. |
+| A preencher — D | Documentação e registro dos testes, com ajuda de todos. |
 
-Todos devem compreender a integração e contribuir com trabalho próprio. A revisão e os testes são compartilhados.
+Cada um terá sua parte, mas todos precisam entender como o projeto funciona.
 
-## Entrega
+## Prazo
 
-Prazo informado pelo grupo: **04/11/2026**. Meta interna: funcionalidades prontas até **30/10/2026**.
+A entrega está prevista para **04/11/2026**. Nossa ideia é terminar as funcionalidades até **30/10** e usar os últimos dias para testar e corrigir os problemas.
 
-Entregáveis previstos: código-fonte completo, executável desktop, short paper com até seis páginas e histórico de contribuições individuais. Manter também um quadro Kanban atualizado para o acompanhamento semanal.
+Vamos entregar o código-fonte, o executável e o short paper de até seis páginas. Também precisamos manter os commits individuais e apresentar o Kanban nas reuniões.
 
 ## Como executar
 
-Ainda não há aplicação neste pacote. As instruções reais de compilação, porta serial, montagem e execução serão adicionadas após a integração do laboratório e os testes no computador da equipe.
+Ainda não temos uma versão executável. Vamos adicionar as instruções depois que o jogo estiver funcionando e tiver sido testado.
 
-## Material de origem
+## Material usado como base
 
-- Enunciado fornecido: `Projeto_Descricao_Geral.docx`.
-- Laboratório fornecido: `laboratorio_arduino.zip`, com exemplo Java/libGDX de leitura serial e movimento lateral.
+Estamos usando o enunciado `Projeto_Descricao_Geral.docx` e o exemplo de comunicação com Arduino do arquivo `laboratorio_arduino.zip`, fornecidos para o projeto.
 
-Ao aproveitar o código do laboratório, identificar sua origem e descrever as alterações feitas pelo grupo. Este pacote não copia o código do professor nem seus arquivos compilados.
+O nome Colheita em Movimento é provisório.

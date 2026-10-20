@@ -1,59 +1,48 @@
 # Proposta do projeto
 
-Status: proposta inicial para revisão do grupo e aprovação do professor.
+## Qual é a ideia
 
-## Problema e contexto
+Vamos fazer um jogo em que o personagem coleta frutas que caem na tela. Para movimentar o personagem, a pessoa precisa apertar dois botões ligados ao Arduino.
 
-O projeto investiga como um jogo simples pode tornar uma atividade repetitiva de alcançar e pressionar alvos mais envolvente. O recorte proposto é o treino de coordenação de braço e mão em pessoas com sequelas motoras de AVC que apresentem movimento suficiente para operar o dispositivo.
+Escolhemos uma ideia simples porque o grupo ainda está aprendendo a usar Arduino e precisamos conseguir montar, programar e testar tudo dentro do prazo.
 
-A proposta não foi validada com pacientes. O protótipo não diagnostica condições, prescreve exercícios ou comprova recuperação clínica. Uma eventual aplicação com pacientes depende da avaliação de profissionais de reabilitação e das orientações da instituição.
+## Quem poderia usar
 
-## Objetivo geral
+Pensamos em pessoas com sequelas motoras de AVC que ainda consigam alcançar e apertar os botões. A proposta é trabalhar uma atividade de coordenação do braço e da mão, deixando a repetição mais interessante por meio do jogo.
 
-Desenvolver um jogo funcional em libGDX, controlado por dados de dois botões conectados ao Arduino, com três fases e registro de desempenho durante a sessão.
+Uma possibilidade é usar a mesma mão para alcançar os dois botões sobre a mesa. A posição dos botões e o esforço necessário devem ser avaliados por um profissional se houver uso com pacientes.
 
-## Objetivos específicos
+Nosso projeto não vai comprovar melhora clínica. Os botões apenas registram quando foram apertados; eles não medem força, amplitude ou a forma como a pessoa movimentou o braço.
 
-- Ler os estados dos botões e transmitir os dados ao computador.
-- Associar esses dados à movimentação do personagem.
-- Criar coleta de frutas, pontuação e progressão entre três fases.
-- Permitir iniciar, pausar e reiniciar pelo dispositivo.
-- Apresentar métricas derivadas da interação e do desempenho no jogo.
-- Documentar a montagem, a execução e os limites da proposta.
+## Objetivo
 
-## Atividade física proposta
+Criar um jogo funcional com Arduino e libGDX, com três fases, pontuação e resultados da partida.
 
-Dois botões grandes são fixados em uma base sobre uma mesa. Uma possibilidade é operar os dois com a mesma mão, deslocando-a entre os alvos. A posição dos botões e o esforço de acionamento precisam ser adequados ao usuário com orientação profissional em uma aplicação clínica.
+## Fases propostas
 
-O circuito detecta acionamentos. Ele não mede a trajetória do braço, a amplitude articular ou a força muscular, nem confirma que o movimento corporal esperado foi executado.
+| Fase | Como será |
+| --- | --- |
+| 1 | Frutas grandes caindo devagar, para aprender os comandos. |
+| 2 | Frutas menores, exigindo mais cuidado no posicionamento. |
+| 3 | Frutas e um tipo de objeto que o jogador precisa evitar. |
 
-## Jogo
+Vamos ajustar os tamanhos e a velocidade depois de testar. Não queremos que a dificuldade dependa apenas de apertar os botões mais rápido.
 
-Um personagem com uma cesta se movimenta horizontalmente para coletar frutas. O cenário pode permanecer o mesmo nas três fases, com indicação visual da etapa.
+## O que vamos fazer
 
-| Fase | Mecânica proposta | Progressão |
-| --- | --- | --- |
-| 1 | Coletar frutas grandes que caem lentamente | Aprender os comandos. |
-| 2 | Coletar frutas menores | Exigir maior precisão de posicionamento. |
-| 3 | Coletar frutas e evitar um tipo de objeto | Exigir seleção e precisão. |
+Um personagem, movimento para os lados, coleta de frutas, três fases, menu, pausa, reinício e tela de resultados. O jogo será para computador, com o Arduino conectado por USB.
 
-A duração, os tamanhos e as velocidades serão definidos após o primeiro protótipo. A dificuldade deve ser ajustável; aumentar a velocidade não será a única forma de progressão.
+Para esta entrega, não vamos incluir cadastro de pacientes, banco de dados, aplicativo de celular ou serviços de nuvem.
 
-## Escopo mínimo
+## O que falta decidir
 
-Um personagem, movimento horizontal, um tipo de fruta, um tipo de objeto a evitar, três fases, menu, pausa, reinício e resultados. A versão alvo é desktop com conexão USB/serial.
+- Confirmar com o professor o uso dos botões e da conexão USB.
+- Conferir os materiais disponíveis.
+- Preencher os integrantes e confirmar a divisão das tarefas.
+- Definir os comandos do menu e as regras finais de pontuação.
 
-Ficam fora desta primeira entrega: aplicativo para celular, nuvem, cadastro de pacientes, banco de dados, multiplayer, luva sensorizada, plataforma de equilíbrio e avaliação clínica.
+## Referência para o relatório
 
-## Decisões pendentes
+Diretriz NICE sobre reabilitação após AVC: https://www.nice.org.uk/guidance/ng236/chapter/Recommendations
 
-- Aprovação do professor para botões em lugar das pedaladas e para conexão USB/serial.
-- Confirmação dos integrantes e dos componentes disponíveis.
-- Nome definitivo e regras de navegação do menu com apenas dois botões.
-- Escolha final dos indicadores e das regras de pontuação.
-
-## Referência para fundamentação
-
-Consultar a diretriz NICE NG236, seção de treino repetitivo de tarefas: https://www.nice.org.uk/guidance/ng236/chapter/Recommendations
-
-Essa referência discute reabilitação após AVC; não constitui evidência de eficácia deste protótipo. O grupo deve ler a seção utilizada e registrar a referência no formato solicitado pelo professor.
+Vamos consultar a parte sobre treino repetitivo de tarefas para fundamentar a proposta. Essa referência não valida o nosso jogo; ela trata da reabilitação de forma mais ampla.
