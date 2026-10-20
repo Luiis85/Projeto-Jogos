@@ -1,0 +1,28 @@
+# Java e Gradle
+.gradle/
+**/build/
+*.class
+
+# Configurações locais de IDE
+.idea/
+.vscode/
+*.iml
+.classpath
+.project
+.settings/
+
+# Sistema operacional
+.DS_Store
+__MACOSX/
+Thumbs.db
+Desktop.ini
+
+# Temporários e configuração privada
+*.log
+*.tmp
+~$*
+.env
+.env.*
+!.env.example
+
+# Preservar gradle/wrapper/gradle-wrapper.jar ao incorporar o laboratório.
