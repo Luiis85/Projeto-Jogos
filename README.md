@@ -8,7 +8,6 @@ A ideia é que a pessoa movimente um personagem para os lados e tente pegar as f
 
 Queremos desenvolver um jogo voltado ao treino de coordenação do braço e da mão. O público que pensamos são pessoas com sequelas de AVC que consigam alcançar e apertar os botões.
 
-O jogo será um projeto acadêmico de apoio à reabilitação. Não vamos avaliar recuperação clínica. Para usar com pacientes, seria necessário acompanhamento de um profissional da área.
 
 ## Como vai funcionar
 
@@ -19,7 +18,7 @@ O jogo será um projeto acadêmico de apoio à reabilitação. Não vamos avalia
 - Também teremos menu, pausa, reinício e uma tela de resultados.
 - Os botões serão usados para controlar o jogo e navegar pelas telas.
 
-## O que temos até agora
+## O que temos por enquanto
 
 Por enquanto, organizamos a proposta, os requisitos e as tarefas. O código do jogo e do Arduino ainda precisa ser desenvolvido.
 
@@ -38,18 +37,6 @@ Também precisamos confirmar com o professor se podemos usar os botões no lugar
 | [Relatório](docs/07-estrutura-paper.md) | Organização do short paper. |
 | [Contribuições](CONTRIBUTING.md) | Como vamos organizar os commits. |
 
-## Integrantes
-
-Ainda precisamos preencher os nomes. A divisão abaixo considera quatro pessoas e pode mudar conforme o grupo.
-
-| Integrante | Parte principal |
-| --- | --- |
-| A preencher — A | Arduino e comunicação com o computador. |
-| A preencher — B | Personagem, frutas e pontuação. |
-| A preencher — C | Menu, telas e organização das fases. |
-| A preencher — D | Documentação e registro dos testes, com ajuda de todos. |
-
-Cada um terá sua parte, mas todos precisam entender como o projeto funciona.
 
 ## Prazo
 
