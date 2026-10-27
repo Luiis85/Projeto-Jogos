@@ -50,4 +50,4 @@ Execute com `java -jar caminho/do/arquivo.jar`. No macOS use `java -XstartOnFirs
 - `docs/08-etapas.md`: entregas e limitações.
 - `docs/09-paper-rascunho.md`: texto inicial do artigo, a completar após integração.
 
-Gráficos originais desenhados em código. Wrapper Gradle aproveitado do material do laboratório. Não foi incorporado leitor serial nem programa da placa. A interface `GameControls` delimita a futura fonte dos estados esquerda/direita; navegação física e tratamento da conexão também precisam ser implementados na etapa 2.
+Gráficos originais desenhados em código. Wrapper Gradle aproveitado do material do laboratório. Não foi incorporado leitor serial nem programa da placa. A interface `ControlesJogo` delimita a futura fonte dos estados esquerda/direita; navegação física e tratamento da conexão também precisam ser implementados na etapa 2.
