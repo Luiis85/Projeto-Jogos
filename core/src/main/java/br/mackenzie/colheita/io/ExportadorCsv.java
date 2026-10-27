@@ -12,14 +12,14 @@ import java.util.Locale;
 public final class ExportadorCsv {
     private ExportadorCsv() { }
     public static String content(ModeloJogo model) {
-        StringBuilder out = new StringBuilder("modo;fase;duracao_s;coletadas;perdidas;colisoes;acionamentos;comandos;respostas_corretas;respostas_erradas;sem_resposta;taxa_coleta_pct;resposta_media_s;pontos_frutas;pontos_respostas;penalidade;pontos_fase\n");
+        StringBuilder out = new StringBuilder("modo;fase;duracao_s;coletadas;perdidas;colisoes;acionamentos;comandos;respostas_corretas;respostas_erradas;sem_resposta;taxa_coleta_pct;resposta_media_s;pontos_frutas;pontos_respostas;penalidade;pontos_fase;interrompidos_fim_fase\n");
         for (int i = 0; i < model.stats().size(); i++) {
             ModeloJogo.Stats s = model.stats().get(i);
             out.append(String.format(Locale.ROOT,
-                "teclado_teste;%d;%.2f;%d;%d;%d;%d;%d;%d;%d;%d;%s;%s;%d;%d;%d;%d%n",
+                "teclado_teste;%d;%.2f;%d;%d;%d;%d;%d;%d;%d;%d;%s;%s;%d;%d;%d;%d;%d%n",
                 i + 1, s.elapsed, s.collected, s.missed, s.collisions, s.presses, s.cues,
                 s.correct, s.wrong, s.timedOut, number(s.accuracy()), number(s.meanResponse()),
-                s.fruitPoints, s.responsePoints, s.penalty, s.score()));
+                s.fruitPoints, s.responsePoints, s.penalty, s.score(), s.interrupted));
         }
         return out.toString();
     }
