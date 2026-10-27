@@ -27,7 +27,7 @@ public final class ModeloJogo {
         }
     }
     public static final class Stats {
-        public int collected, missed, collisions, presses, cues, correct, wrong, timedOut;
+        public int collected, missed, collisions, presses, cues, correct, wrong, timedOut, interrupted;
         public int fruitPoints, responsePoints, penalty;
         public double responseSeconds, elapsed;
         public int score() { return Math.max(0, fruitPoints + responsePoints - penalty); }
@@ -143,7 +143,11 @@ public final class ModeloJogo {
         return (item.x - nearX) * (item.x - nearX) + (item.y - nearY) * (item.y - nearY) <= item.radius * item.radius;
     }
     private void finishLevel() {
-        current().elapsed = level().duration;
+        if (state != State.PLAYING) return;
+        Stats s = current();
+        // A fase terminou antes de completar o prazo do comando. Nao e erro do jogador.
+        if (cueDirection != 0) s.interrupted++;
+        s.elapsed = level().duration;
         state = levelIndex == LEVELS.size() - 1 ? State.FINISHED : State.PHASE_COMPLETE;
         items.clear(); cueDirection = 0;
     }
