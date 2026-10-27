@@ -26,3 +26,7 @@ Desktop.ini
 !.env.example
 
 # Preservar gradle/wrapper/gradle-wrapper.jar ao incorporar o laboratório.
+
+# Resultados locais
+resultados/
+*.csv
