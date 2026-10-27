@@ -1,10 +1,10 @@
 package br.mackenzie.colheita.desktop;
 
-import br.mackenzie.colheita.ColheitaGame;
+import br.mackenzie.colheita.JogoColheita;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
 
-public final class DesktopLauncher {
+public final class InicializadorDesktop {
     public static void main(String[] args) {
         Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
         config.setTitle("Colheita em Movimento | Etapa 1");
@@ -13,6 +13,6 @@ public final class DesktopLauncher {
         config.useVsync(true); config.setForegroundFPS(60);
         config.disableAudio(true);
         String capture = args.length == 2 && args[0].equals("--capture") ? args[1] : null;
-        new Lwjgl3Application(new ColheitaGame(capture), config);
+        new Lwjgl3Application(new JogoColheita(capture), config);
     }
 }
