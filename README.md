@@ -1,55 +1,53 @@
 # Colheita em Movimento
 
-Nosso projeto será um jogo de coleta de frutas, feito em Java com libGDX e controlado por dois botões ligados ao Arduino.
+Jogo Java 17 com libGDX. Etapa 1: versão digital com teclado de teste. Etapa 2: Arduino, circuito e controle físico ainda pendentes. Esta versão não atende ainda ao controle exclusivo pelo dispositivo exigido na entrega final.
 
-A ideia é que a pessoa movimente um personagem para os lados e tente pegar as frutas que caem. Conforme ela avança, o jogo fica um pouco mais difícil.
+## Executar
 
-## Objetivo
+Instale o JDK 17 e confira `java -version`. Na pasta que contém `gradlew.bat`:
 
-Queremos desenvolver um jogo voltado ao treino de coordenação do braço e da mão. O público que pensamos são pessoas com sequelas de AVC que consigam alcançar e apertar os botões.
+Windows PowerShell:
+```
+.\gradlew.bat lwjgl3:run
+```
+Linux/macOS:
+```
+chmod +x gradlew
+./gradlew lwjgl3:run
+```
+A primeira execução precisa de internet para baixar Gradle e dependências.
 
+## Controles
 
-## Como vai funcionar
+- A/D ou setas: movimentar; soltar para parar; ambas juntas deixam parado.
+- Tab/setas e Enter: menus. Mouse também funciona.
+- P/Esc: pausar e continuar. R na pausa: reiniciar toda a partida.
+- Resultados: exportar CSV na pasta pessoal `ColheitaEmMovimento/resultados`.
 
-- O botão da esquerda move o personagem para a esquerda.
-- O botão da direita move o personagem para a direita.
-- O jogador ganha pontos ao coletar frutas.
-- O jogo terá três fases com dificuldade progressiva.
-- Também teremos menu, pausa, reinício e uma tela de resultados.
-- Os botões serão usados para controlar o jogo e navegar pelas telas.
+## Regras
 
-## O que temos por enquanto
+Três fases de 45, 50 e 55 segundos. Frutas ficam menores e mais rápidas. Na fase 3 surgem pedras. Fruta coletada: +10; pedra: -15. Pontuação mínima por fase: zero. Não há vidas nem eliminação.
 
-Por enquanto, organizamos a proposta, os requisitos e as tarefas. O código do jogo e do Arduino ainda precisa ser desenvolvido.
+Comandos visuais de esquerda/direita pedem um novo acionamento em até 3 segundos. Resposta correta vale `10 + arredondar(20 × (1 − tempo/3))` pontos. Erro ou falta de resposta não pontuam. Segurar antes da seta exige soltar e apertar novamente. Acionamentos são contados pela transição de solto para pressionado.
 
-Também precisamos confirmar com o professor se podemos usar os botões no lugar das pedaladas e fazer a comunicação por USB. O enunciado permite outros dispositivos com autorização, mas a parte da avaliação menciona pedaladas.
+A taxa de coleta considera coletadas/(coletadas+perdidas). Objetos ainda no ar ao terminar a fase não contam como perdas. Tempo médio considera somente respostas corretas; ausência de dados aparece como -- e célula vazia no CSV. Resultados são desempenho no jogo, sem comprovação clínica.
 
-## Organização dos arquivos
+## Compilar e testar
 
-| Arquivo | O que tem nele |
-| --- | --- |
-| [Proposta](docs/01-proposta.md) | Ideia do jogo, objetivo e público. |
-| [Requisitos](docs/02-requisitos.md) | O que precisamos entregar e como o jogo deve funcionar. |
-| [Planejamento](docs/03-planejamento.md) | Divisão das tarefas até a entrega. |
-| [Kanban](docs/04-kanban.md) | Lista de tarefas e andamento. |
-| [Testes](docs/05-validacao.md) | O que vamos conferir durante o desenvolvimento. |
-| [Arduino](docs/06-arduino-integracao.md) | Materiais e passos para ligar os botões ao jogo. |
-| [Relatório](docs/07-estrutura-paper.md) | Organização do short paper. |
-| [Contribuições](CONTRIBUTING.md) | Como vamos organizar os commits. |
+```
+./gradlew core:test lwjgl3:fatJar
+```
+No Windows use `.\gradlew.bat` no lugar de `./gradlew`.
+O JAR fica em `lwjgl3/build/libs/colheita-em-movimento-0.1.0.jar`.
+Execute com `java -jar caminho/do/arquivo.jar`. No macOS use `java -XstartOnFirstThread -jar caminho/do/arquivo.jar`. Requer Java 17 e ambiente gráfico com OpenGL. O JAR não inclui uma JVM.
 
+## Organização
 
-## Prazo
+- `core/src/main/java`: regras, apresentação, teclado e exportação CSV.
+- `core/src/test/java`: testes automatizados das regras.
+- `lwjgl3`: inicialização desktop e empacotamento.
+- `docs/07-github.md`: instruções para publicar.
+- `docs/08-etapas.md`: entregas e limitações.
+- `docs/09-paper-rascunho.md`: texto inicial do artigo, a completar após integração.
 
-A entrega está prevista para **04/11/2026**. Nossa ideia é terminar as funcionalidades até **30/10** e usar os últimos dias para testar e corrigir os problemas.
-
-Vamos entregar o código-fonte, o executável e o short paper de até seis páginas. Também precisamos manter os commits individuais e apresentar o Kanban nas reuniões.
-
-## Como executar
-
-Ainda não temos uma versão executável. Vamos adicionar as instruções depois que o jogo estiver funcionando e tiver sido testado.
-
-## Material usado como base
-
-Estamos usando o enunciado `Projeto_Descricao_Geral.docx` e o exemplo de comunicação com Arduino do arquivo `laboratorio_arduino.zip`, fornecidos para o projeto.
-
-O nome Colheita em Movimento é provisório.
+Gráficos originais desenhados em código. Wrapper Gradle aproveitado do material do laboratório. Não foi incorporado leitor serial nem programa da placa. A interface `GameControls` delimita a futura fonte dos estados esquerda/direita; navegação física e tratamento da conexão também precisam ser implementados na etapa 2.
