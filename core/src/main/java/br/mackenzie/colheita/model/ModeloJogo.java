@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Random;
 
 /** Deterministic game rules. No graphics, keyboard or hardware dependencies. */
-public final class GameModel {
+public final class ModeloJogo {
     public static final float WIDTH = 960, HEIGHT = 600;
     public static final float PLAYER_Y = 90, PLAYER_W = 86, PLAYER_H = 34;
     public static final float PLAYER_SPEED = 340, RESPONSE_LIMIT = 3;
@@ -45,8 +45,8 @@ public final class GameModel {
     private String feedback = "";
     private float feedbackTime;
 
-    public GameModel() { this(new Random()); }
-    public GameModel(Random random) { this.random = random; }
+    public ModeloJogo() { this(new Random()); }
+    public ModeloJogo(Random random) { this.random = random; }
     public void start() {
         stats.clear();
         for (int i = 0; i < LEVELS.size(); i++) stats.add(new Stats());
