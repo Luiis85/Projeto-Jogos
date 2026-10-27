@@ -32,6 +32,8 @@ Comandos visuais de esquerda/direita pedem um novo acionamento em até 3 segundo
 
 A taxa de coleta considera coletadas/(coletadas+perdidas). Objetos ainda no ar ao terminar a fase não contam como perdas. Tempo médio considera somente respostas corretas; ausência de dados aparece como -- e célula vazia no CSV. Resultados são desempenho no jogo, sem comprovação clínica.
 
+Quando a fase termina com um comando ainda ativo, ele é registrado na coluna `interrompidos_fim_fase` do CSV, sem erro ou penalidade. Ao concluir cada fase, o total de comandos corresponde à soma de respostas corretas, erradas, sem resposta e interrompidas. A nova coluna fica no final, preservando a ordem das colunas anteriores. Arquivos CSV já exportados permanecem inalterados.
+
 ## Compilar e testar
 
 ```
