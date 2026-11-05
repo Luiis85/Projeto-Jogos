@@ -1,4 +1,4 @@
-# Java e Gradle
+# Java e Gradle.
 .gradle/
 **/build/
 *.class
