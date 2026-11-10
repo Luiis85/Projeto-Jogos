@@ -1,8 +1,10 @@
 package br.mackenzie.colheita.input;
 
-/** Input boundary reserved for stage 2. This release contains no serial reader. */
+/** Fonte de comandos consultada uma vez por quadro. */
 public interface ControlesJogo {
     boolean left();
     boolean right();
     String label();
+    default void poll() {}
+    default boolean connected() { return true; }
 }

@@ -1,44 +1,30 @@
 # Arduino e comunicação com o jogo
 
-## Materiais previstos
+## Montagem
 
-| Material | Quantidade |
+Desconecte o USB enquanto monta. Os botões usam o resistor de pull-up interno e fecham o circuito para o GND quando pressionados.
+
+| Componente | Ligação |
 | --- | --- |
-| Arduino Uno ou placa compatível com o laboratório | 1 |
-| Cabo USB que transmita dados | 1 |
-| Botões | 2 |
-| Protoboard | 1 |
-| Fios de conexão | Conforme a montagem |
-| Base para fixar os botões | 1 |
+| GND do Uno | Faixa azul (−) da protoboard |
+| Branco | Um contato ao pino digital 2 e o outro ao GND |
+| Azul | Um contato ao pino digital 3 e o outro ao GND |
 
-Vamos conferir o que já temos e confirmar a proposta com o professor antes de comprar. Para a montagem final, a ideia é usar botões grandes, fáceis de apertar e bem fixados.
+Na montagem testada, o botão branco fica no bloco f–j e o azul em uma área livre do bloco a–e. Use dois contatos do botão que só se conectem ao apertar. Cada jumper deve compartilhar a fileira e o lado da canaleta com o terminal correspondente. A faixa usada para GND deve ser eletricamente comum aos dois botões.
 
-## Como os dados vão chegar ao jogo
+## Comunicação serial
 
-A pessoa aperta o botão, o Arduino lê o estado e envia a informação pelo cabo USB. O programa em Java recebe esse dado e movimenta o personagem no libGDX.
+O sketch estabiliza a leitura por 25 ms e envia os estados a cada 50 ms pela porta serial a 9600 baud, 8 bits, sem paridade, um bit de parada. Exemplo de linha:
 
-O laboratório que recebemos já tem um exemplo de leitura pela porta serial e movimento para os lados. Vamos usar isso como base e identificar no projeto quais partes foram adaptadas.
+```text
+Branco: SOLTO | Azul: APERTADO
+```
 
-Não encontramos um arquivo `.ino` no ZIP analisado. Ainda precisamos criar o programa que será enviado ao Arduino.
+O módulo desktop abre a porta com jSerialComm. A partida usa o estado mais recente, descarta leituras antigas e pausa se deixar de receber dados. Quando a conexão retorna, os botões devem ser soltos antes de retomar. O Monitor Serial deve estar fechado enquanto o jogo usa a porta.
 
-## Por onde vamos começar
+## Conferência local
 
-1. Conseguir enviar um programa básico para a placa.
-2. Ler um botão e conferir o resultado no monitor serial.
-3. Fazer a leitura dos dois botões.
-4. Definir como enviar os estados ao Java.
-5. Conferir se o Java recebe os dados.
-6. Usar os dados para mover o personagem.
-7. Testar o que acontece ao soltar, apertar os dois juntos e desconectar o cabo.
-
-## O que precisamos documentar depois da montagem
-
-- Modelo da placa.
-- Pinos usados e desenho ou foto das ligações.
-- Formato das mensagens e velocidade da comunicação.
-- Porta serial e como mudar essa configuração.
-- Comandos usados no menu, na pausa e no reinício.
-
-O leitor do laboratório guarda a última mensagem recebida. Precisamos conferir se ele não perde apertos rápidos e se o personagem para quando não deve mais receber o comando. Também precisamos evitar que a oscilação do contato de um botão seja contada como vários apertos.
-
-Ainda não temos circuito nem comunicação testados pelo grupo neste pacote.
+1. No Monitor Serial, teste os estados de repouso, pressão e soltura dos dois botões.
+2. No jogo, inicie com ambos e confira as duas direções e a parada ao soltar.
+3. Pause, continue e reinicie pelo controle. Conclua as três fases e exporte o CSV.
+4. Desconecte o USB durante uma fase e confira a pausa. Reconecte, solte os botões e confirme Continuar.
