@@ -1,0 +1,2 @@
+rootProject.name = 'colheita-em-movimento'
+include 'core', 'lwjgl3'
