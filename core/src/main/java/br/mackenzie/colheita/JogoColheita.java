@@ -9,7 +9,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.PixmapIO;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -26,7 +25,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Random;
 
-/** Desktop presentation. Every input here is explicitly a development control. */
+/** Telas e comandos do jogo. */
 public final class JogoColheita extends ApplicationAdapter {
     private enum Page { MENU, HELP, GAME }
     private record Button(Rectangle bounds, String label, Runnable action, boolean primary) { }
@@ -37,7 +36,10 @@ public final class JogoColheita extends ApplicationAdapter {
     private BitmapFont font;
     private FitViewport viewport;
     private final GlyphLayout layout = new GlyphLayout();
-    private final ControlesJogo controls = new ControlesTeclado();
+    private final ControlesJogo controls;
+    private final boolean modoArduino;
+    private int botaoMenu;
+    private boolean aguardaSoltura = true;
     private ModeloJogo model = new ModeloJogo();
     private final List<Button> buttons = new ArrayList<>();
     private Page page = Page.MENU;
@@ -49,8 +51,18 @@ public final class JogoColheita extends ApplicationAdapter {
     private int captureStep, captureFrames;
     private final Vector2 mouse = new Vector2();
 
-    public JogoColheita() { this(null); }
-    public JogoColheita(String captureFolder) { this.captureFolder = captureFolder; }
+    public JogoColheita() { this((String) null); }
+    public JogoColheita(String captureFolder) {
+        this(new ControlesTeclado(), false, captureFolder);
+    }
+    public JogoColheita(ControlesJogo controls) {
+        this(controls, true, null);
+    }
+    private JogoColheita(ControlesJogo controls, boolean modoArduino, String captureFolder) {
+        this.controls = controls;
+        this.modoArduino = modoArduino;
+        this.captureFolder = captureFolder;
+    }
     private static Color color(String hex) { return Color.valueOf(hex); }
     @Override public void create() {
         shapes = new ShapeRenderer(); batch = new SpriteBatch(); font = new BitmapFont();
@@ -61,12 +73,33 @@ public final class JogoColheita extends ApplicationAdapter {
     @Override public void resize(int width, int height) { viewport.update(width, height, true); }
     @Override public void render() {
         float dt = Gdx.graphics.getDeltaTime(); clock += Math.min(dt, .1f);
-        if (page == Page.GAME) model.update(dt, controls.left(), controls.right());
+        controls.poll();
+        if (modoArduino && !controls.connected()) {
+            if (page == Page.GAME && model.state() == ModeloJogo.State.PLAYING) pausarPartida();
+            aguardaSoltura = true;
+            botaoMenu = 0;
+        }
+        if (page == Page.GAME) {
+            boolean esquerda = controls.left(), direita = controls.right();
+            if (modoArduino && !aguardaSoltura && esquerda && direita
+                && model.state() == ModeloJogo.State.PLAYING) {
+                pausarPartida();
+                aguardaSoltura = true;
+            }
+            boolean aceitaMovimento = !modoArduino || !aguardaSoltura;
+            boolean estavaJogando = model.state() == ModeloJogo.State.PLAYING;
+            model.update(dt, aceitaMovimento && esquerda, aceitaMovimento && direita);
+            if (modoArduino && estavaJogando && model.state() != ModeloJogo.State.PLAYING) {
+                aguardaSoltura = true;
+            }
+        }
         ScreenUtils.clear(CREAM);
         viewport.apply();
         shapes.setProjectionMatrix(viewport.getCamera().combined);
         batch.setProjectionMatrix(viewport.getCamera().combined);
-        mouse.set(Gdx.input.getX(), Gdx.input.getY()); viewport.unproject(mouse);
+        if (!modoArduino) {
+            mouse.set(Gdx.input.getX(), Gdx.input.getY()); viewport.unproject(mouse);
+        }
         buttons.clear();
         if (page == Page.MENU) drawMenu();
         else if (page == Page.HELP) drawHelp();
@@ -77,7 +110,8 @@ public final class JogoColheita extends ApplicationAdapter {
             case FINISHED -> drawSummary(true);
             default -> drawMenu();
         }
-        handleInput();
+        if (modoArduino) lerMenuArduino();
+        else handleInput();
         if (captureFolder != null) captureSequence();
     }
     private void header(String title, String detail) {
@@ -87,9 +121,15 @@ public final class JogoColheita extends ApplicationAdapter {
         text(detail, 89, 553, .82f, MUTED);
         rect(0, 529, 960, 1, color("E1E7D6"));
     }
+    private void pausarPartida() {
+        model.pause();
+        focus = 0;
+    }
     private void footer(String hint) {
         text(controls.label(), 28, 23, .72f, MUTED);
-        rightText(hint, 932, 23, .72f, MUTED);
+        rightText(modoArduino
+            ? "Branco: anterior  |  Azul: proximo  |  Ambos: confirmar"
+            : hint, 932, 23, .72f, MUTED);
     }
     private void drawMenu() {
         header("COLHEITA EM MOVIMENTO", "Um pomar, tres desafios e uma colheita de cada vez.");
@@ -113,16 +153,18 @@ public final class JogoColheita extends ApplicationAdapter {
         footer("Setas / Tab: escolher  |  Enter: confirmar");
     }
     private void drawHelp() {
-        header("COMO JOGAR", "Versao digital de teste. Nenhuma placa precisa estar conectada.");
+        header("COMO JOGAR", modoArduino
+            ? "Use os botoes ligados ao Arduino para jogar e navegar."
+            : "Versao digital de teste. Nenhuma placa precisa estar conectada.");
         rect(32, 113, 435, 385, PAPER); rect(487, 113, 441, 385, PAPER);
         text("01  MOVA E COLETE", 56, 469, 1.2f, GREEN);
-        text("Seta esquerda / A: ir para a esquerda.", 56, 428, 1f, INK);
-        text("Seta direita / D: ir para a direita.", 56, 399, 1f, INK);
-        text("Soltou a tecla? O personagem para.", 56, 370, 1f, INK);
-        text("As duas direcoes juntas: fica parado.", 56, 341, 1f, INK);
+        text(modoArduino ? "Botao branco: mover para a esquerda." : "Seta esquerda / A: ir para a esquerda.", 56, 428, 1f, INK);
+        text(modoArduino ? "Botao azul: mover para a direita." : "Seta direita / D: ir para a direita.", 56, 399, 1f, INK);
+        text(modoArduino ? "Solte o botao para parar." : "Soltou a tecla? O personagem para.", 56, 370, 1f, INK);
+        text(modoArduino ? "Nos menus, solte o botao para navegar." : "As duas direcoes juntas: fica parado.", 56, 341, 1f, INK);
         text("Cada fruta na cesta vale 10 pontos.", 56, 295, 1f, MUTED);
         text("Na fase 3, evite pedras: -15 pontos.", 56, 266, 1f, MUTED);
-        text("P ou Esc: pausar. R: reiniciar na pausa.", 56, 218, .95f, INK);
+        text(modoArduino ? "Aperte os dois botoes juntos para pausar." : "P ou Esc: pausar. R: reiniciar na pausa.", 56, 218, .95f, INK);
         text("As fases duram 45, 50 e 55 segundos.", 56, 188, .95f, INK);
         text("Nao ha vidas: pratique ate o final.", 56, 158, .95f, INK);
         text("02  RESPONDA A SETA", 511, 469, 1.2f, GREEN);
@@ -161,7 +203,7 @@ public final class JogoColheita extends ApplicationAdapter {
         rect(560, 546, 155, 39, LIME);
         centerText(model.totalScore() + " PONTOS", 637, 572, 1.1f, GREEN);
         centerText(String.format(Locale.ROOT, "%02d s", (int) Math.ceil(model.remaining())), 770, 573, 1.6f, INK);
-        button(843, 544, 91, 42, "Pausar", () -> { model.pause(); focus = 0; }, false);
+        if (!modoArduino) button(843, 544, 91, 42, "Pausar", this::pausarPartida, false);
         rect(0, 522, 960, 6, color("DBE5CF"));
         rect(0, 522, 960 * (1 - model.remaining() / model.level().duration()), 6, GREEN);
         if (model.cueDirection() != 0) {
@@ -177,15 +219,18 @@ public final class JogoColheita extends ApplicationAdapter {
         }
         ModeloJogo.Stats s = model.current();
         text("COLETADAS  " + s.collected + "     PERDIDAS  " + s.missed, 26, 31, .88f, INK);
-        rightText("A / D ou setas: mover   |   P: pausa", 934, 31, .88f, INK);
-        text("TECLADO DE TESTE", 28, 504, .7f, MUTED);
+        rightText(modoArduino ? "Branco / azul: mover  |  Ambos: pausa" : "A / D ou setas: mover   |   P: pausa",
+            934, 31, .88f, INK);
+        text(controls.label(), 28, 504, .7f, MUTED);
     }
     private void drawPause() {
         scenery();
         character(model.playerX(), ModeloJogo.PLAYER_Y, 1, 0);
         rect(228, 100, 504, 407, PAPER);
         centerText("Uma pausa no pomar", 480, 467, 1.95f, INK);
-        centerText("O tempo e os objetos estao parados.", 480, 428, 1f, MUTED);
+        centerText(modoArduino && !controls.connected()
+            ? "Reconecte o Arduino e solte os botoes."
+            : "O tempo e os objetos estao parados.", 480, 428, 1f, MUTED);
         centerText("Fase " + (model.levelIndex() + 1) + "  /  " + model.totalScore() + " pontos", 480, 393, 1f, GREEN);
         button(304, 302, 352, 52, "Continuar", () -> { model.resume(); focus = 0; }, true);
         button(304, 235, 352, 49, "Reiniciar partida", this::start, false);
@@ -200,7 +245,8 @@ public final class JogoColheita extends ApplicationAdapter {
         text("PONTUACAO TOTAL", 52, 435, .9f, color("DCEBBF"));
         text(Integer.toString(model.totalScore()), 52, 414, 1.55f, Color.WHITE);
         text("Frutas + respostas aos comandos - pedras", 282, 432, 1f, Color.WHITE);
-        text("Indicadores simulados pelo teclado nesta etapa", 282, 409, .88f, color("DCEBBF"));
+        text(modoArduino ? "Indicadores do controle Arduino" : "Indicadores do teclado de teste",
+            282, 409, .88f, color("DCEBBF"));
         String[] labels = { "FASE", "COLETADAS", "PERDIDAS", "COLETA", "RESPOSTA", "PONTOS" };
         float[] xs = { 48, 245, 389, 529, 672, 835 };
         rect(32, 339, 896, 32, color("DFE8D3"));
@@ -224,7 +270,7 @@ public final class JogoColheita extends ApplicationAdapter {
             button(32, 77, 278, 49, "Jogar novamente", this::start, true);
             button(330, 77, 278, 49, exported ? "Exportar outra copia" : "Exportar resultados CSV", this::export, false);
             button(628, 77, 300, 49, "Voltar ao menu", () -> changePage(Page.MENU), false);
-            text(exportMessage.isEmpty() ? "Exporte para comparar partidas. Modo registrado: teclado_teste." : exportMessage,
+            text(exportMessage.isEmpty() ? "Exporte para comparar partidas. Modo: " + modoCsv() : exportMessage,
                 32, 54, .77f, MUTED);
         } else {
             button(32, 77, 360, 49, "Ir para a fase " + (model.levelIndex() + 2), () -> { model.nextLevel(); focus = 0; }, true);
@@ -235,10 +281,11 @@ public final class JogoColheita extends ApplicationAdapter {
     private String shortName(int i) { return new String[] { "Tranquilo", "Atenta", "Desafio" }[i]; }
     private String percent(double n) { return Double.isNaN(n) ? "--" : String.format(Locale.ROOT, "%.1f%%", n); }
     private String seconds(double n) { return Double.isNaN(n) ? "--" : String.format(Locale.ROOT, "%.2f s", n); }
+    private String modoCsv() { return modoArduino ? "arduino" : "teclado_teste"; }
     private void export() {
         try {
             Path dir = Path.of(System.getProperty("user.home"), "ColheitaEmMovimento", "resultados");
-            Path saved = ExportadorCsv.save(model, dir);
+            Path saved = ExportadorCsv.save(model, dir, modoCsv());
             exported = true; savedPath = saved.toString();
             exportMessage = "CSV salvo em: " + dir;
             Gdx.app.log("Resultados", savedPath);
@@ -252,6 +299,28 @@ public final class JogoColheita extends ApplicationAdapter {
         exportMessage = ""; savedPath = ""; exported = false;
     }
     private void changePage(Page value) { page = value; focus = 0; }
+    private void lerMenuArduino() {
+        if (!controls.connected()) return;
+        boolean esquerda = controls.left(), direita = controls.right();
+        if (aguardaSoltura) {
+            if (!esquerda && !direita) aguardaSoltura = false;
+            return;
+        }
+        if (buttons.isEmpty()) {
+            botaoMenu = 0;
+            return;
+        }
+        if (esquerda && direita) {
+            botaoMenu = 0;
+            aguardaSoltura = true;
+            buttons.get(Math.min(focus, buttons.size() - 1)).action.run();
+        } else if (esquerda || direita) {
+            botaoMenu = esquerda ? -1 : 1;
+        } else if (botaoMenu != 0) {
+            focus = Math.floorMod(focus + botaoMenu, buttons.size());
+            botaoMenu = 0;
+        }
+    }
     private void handleInput() {
         boolean playing = page == Page.GAME && model.state() == ModeloJogo.State.PLAYING;
         boolean paused = page == Page.GAME && model.state() == ModeloJogo.State.PAUSED;
@@ -275,7 +344,7 @@ public final class JogoColheita extends ApplicationAdapter {
             for (Button b : buttons) if (b.bounds.contains(mouse)) { b.action.run(); break; }
         }
     }
-    @Override public void pause() { model.pause(); }
+    @Override public void pause() { if (!modoArduino) model.pause(); }
     @Override public void dispose() { shapes.dispose(); batch.dispose(); font.dispose(); }
 
     // Drawn in code: original art, without external image or font downloads.
@@ -321,7 +390,7 @@ public final class JogoColheita extends ApplicationAdapter {
     }
     private void button(float x, float y, float w, float h, String label, Runnable action, boolean primary) {
         int index = buttons.size(); Rectangle bounds = new Rectangle(x, y, w, h);
-        boolean selected = index == focus, hover = bounds.contains(mouse);
+        boolean selected = index == focus, hover = !modoArduino && bounds.contains(mouse);
         if (selected || hover) rect(x - 3, y - 3, w + 6, h + 6, ORANGE);
         rect(x, y, w, h, primary ? GREEN : PAPER);
         if (!primary) { rect(x, y, w, 1, color("CDD9C3")); rect(x, y + h - 1, w, 1, color("CDD9C3")); }
