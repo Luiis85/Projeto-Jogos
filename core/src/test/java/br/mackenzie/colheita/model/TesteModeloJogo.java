@@ -60,4 +60,11 @@ class TesteModeloJogo {
     +Integer.parseInt(campos[9])+Integer.parseInt(campos[10])+Integer.parseInt(campos[17]));
   }
  }
+ @Test void csvIdentificaSessoesDoArduino() {
+    var model = new ModeloJogo();
+    model.start();
+    var dados = ExportadorCsv.content(model, "arduino");
+    assertTrue(dados.lines().skip(1).allMatch(linha -> linha.startsWith("arduino;")));
+    assertTrue(dados.lines().count() > 1);
+ }
 }
