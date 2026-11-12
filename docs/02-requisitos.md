@@ -15,7 +15,7 @@
 | Aplicação | Executável ou APK funcionando. Vamos trabalhar com a versão para computador. |
 | Short paper | Documento de até seis páginas com problema, justificativa, descrição do jogo, integração e prints. |
 
-## Como pretendemos atender
+## Funcionalidades implementadas
 
 - Usar dois botões conectados ao Arduino.
 - Fazer o personagem andar para a esquerda ou para a direita.
@@ -28,7 +28,7 @@ Ainda precisamos da autorização do professor para usar os botões no lugar das
 
 ## Pontuação e indicadores
 
-Pretendemos contar frutas coletadas, frutas perdidas e acionamentos dos botões. Cada fruta deve ser contada uma única vez.
+O jogo conta frutas coletadas, frutas perdidas e acionamentos dos botões. Cada fruta deve ser contada uma única vez.
 
 A taxa de coleta será:
 
@@ -38,7 +38,7 @@ Se ainda não houver frutas avaliadas, vamos mostrar que não há dados, sem faz
 
 Para contar acionamentos, precisamos identificar quando o botão passa de solto para pressionado. Manter o botão apertado não pode contar várias vezes como se fossem novos toques.
 
-Contar apenas frutas não atende, sozinho, à exigência de usar um indicador do dispositivo na pontuação. Antes de implementar, vamos definir como relacionar os comandos físicos aos pontos e confirmar essa regra com o professor. Uma possibilidade é mostrar um comando na tela e dar pontos quando o botão indicado for apertado dentro do tempo definido.
+A pontuação usa o tempo de resposta aos comandos visuais. Quando surge uma seta, o jogador tem três segundos para acionar a direção indicada. Uma resposta correta vale de 10 a 30 pontos, conforme o tempo gasto. Cada fruta vale 10 pontos e cada colisão com pedra desconta 15. A pontuação de cada fase tem mínimo zero.
 
 Se medirmos tempo de resposta, ele será contado entre o aparecimento de um comando e o acionamento correto. Não vamos chamar qualquer intervalo entre apertos de tempo de resposta.
 

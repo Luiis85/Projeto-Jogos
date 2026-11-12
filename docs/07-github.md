@@ -1,25 +1,38 @@
-# Colocar no GitHub
+# Publicar os commits do grupo
 
-1. Baixe e extraia o ZIP desta entrega.
-2. Instale Git e JDK 17.
-3. Abra um terminal numa pasta de trabalho e execute:
-```
-git clone https://github.com/Luiis85/Projeto-Jogos.git
-cd Projeto-Jogos
-git switch -c etapa-1-jogo
-```
-4. Copie o conteúdo da pasta `Projeto-Jogos` do ZIP para dentro do clone. Mescle as pastas e substitua arquivos quando solicitado. Copie também `.gitignore`; não copie uma pasta `.git` de outro local.
-5. No PowerShell, confira:
-```
+O grupo é formado por Luis Otavio, Matheus Henrique e Matheus Romano. Cada pessoa usa a própria conta para publicar o trabalho que revisou e testou.
+
+## Sua parte
+
+O pacote Publicar_na_Main.zip publica na main o jogo existente e o commit do controle Arduino. O histórico é preservado. Depois, as branches antigas, já incorporadas à main, são removidas.
+
+## Parte do colega
+
+Depois da publicação da primeira parte, o responsável pela segunda parte deve seguir estes passos no site do GitHub.
+
+1. Entrar com a própria conta e abrir o repositório Luiis85/Projeto-Jogos.
+2. Selecionar a branch main.
+3. Baixar e extrair GitHub_Parte_2_Jogo_Documentacao.zip.
+4. Clicar em Add file e depois Upload files.
+5. Arrastar todo o conteúdo extraído, incluindo as pastas inteiras core, docs e lwjgl3, além dos arquivos da raiz. Conferir os caminhos antes de publicar.
+6. Usar a mensagem "Integra os botoes ao jogo e atualiza os documentos" e confirmar o commit na main.
+7. Excluir docs/09-paper-rascunho.md, substituído por docs/09-paper.md, e registrar essa atualização.
+
+Quem preferir publicar pelo Git pode clonar o repositório, copiar a parte 2 para o clone e executar:
+
+```powershell
+git switch main
+git pull --ff-only
+git rm docs/09-paper-rascunho.md
 .\gradlew.bat core:test lwjgl3:fatJar
-.\gradlew.bat lwjgl3:run
-git status
-git add .
-git commit -m "Implementa etapa digital do Colheita em Movimento"
-git push -u origin etapa-1-jogo
+git diff --check
+git add README.md INICIAR-JOGO.bat build.gradle core lwjgl3/src/main/java/br/mackenzie/colheita/desktop/InicializadorDesktop.java docs
+git commit -m "Integra os botoes ao jogo e atualiza os documentos"
+git push origin main
 ```
-6. No GitHub abra o repositório e clique em Compare & pull request. Revise e faça o merge para main.
 
-Não envie `.gradle`, pastas `build`, resultados pessoais ou o ZIP do projeto para o código-fonte. O `.gitignore` já exclui esses itens. Para disponibilizar o executável, crie uma Release no GitHub e anexe o JAR gerado. Informe que requer Java 17 e ainda usa teclado.
+## Conferência final
 
-O push usa sua conta e permissões habituais. Não coloque senha nem token dentro de arquivos. O ZIP não contém histórico Git; os comandos acima preservam o histórico do repositório existente. Cada integrante deve fazer commits reais do próprio trabalho; não recrie datas ou contribuições passadas.
+Acompanhar a execução de Java build na aba Actions depois do commit. Com os testes aprovados, conferir o jogo no notebook da apresentação e registrar os resultados em docs/05-validacao.md.
+
+O JAR pode ser anexado a uma Release. Os arquivos ZIP são usados para preparar os commits.
